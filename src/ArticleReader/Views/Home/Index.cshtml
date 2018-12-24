@@ -1,0 +1,45 @@
+﻿@model ArticleReader.Models.SpeechModel
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+@using (Html.BeginForm("Index", "Home", FormMethod.Post, new { id = "submitform" }))
+{
+<div class="row">
+    <br />
+    <div class="form-group">
+        @Html.Label("LocaleAndVoice", "Select the locale", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div>
+            @Html.DropDownListFor(model => model.LocaleCode, Model.LocalePreference, htmlAttributes: new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.Label("Url", "Enter the article url", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div>
+            @Html.TextBox("ArticleUrl", null, htmlAttributes: new { @class = "form-control", @style = "float: left;", required = "required" })
+        </div>
+    </div>
+    <br /><br /> <br />
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" name="command" value="Read Article" class="btn btn-default" />
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+        <label class="form-group">Click to play audio</label>
+        <audio controls>
+            <source src="@Url.Action("PlayAudio", "Home", new { token = ViewBag.Token, key = ViewBag.Key, content = ViewBag.Content, locale = ViewBag.LocaleCode  })" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+    @*<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+            <label class="control-label">Play Audio</label>
+            <audio controls>
+                <source src="@Url.Action("PlayAudio", "Home", new { token = ViewBag.Token, key = ViewBag.Key, content = ViewBag.Content  })" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>*@
+</div>
+}
